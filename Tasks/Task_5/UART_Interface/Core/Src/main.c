@@ -123,7 +123,7 @@ int main(void)
 	  if(get_RedLed() == 1)
 	  {
 		  printf("\r\nRedLed ON, with button, number SWT5!\r\n");
-	  } else if (get_BlueLed() == 0)
+	  } else if (get_RedLed() == 0)
 	  {
 		  printf("\r\nRedLed OFF, with button, number SWT5!\r\n");
 	  }
@@ -131,7 +131,7 @@ int main(void)
 	  if(get_OrangeLed() == 1)
 	  {
 		  printf("\r\nOrangeLed ON, with button, number SWT3!\r\n");
-	  }else if (get_BlueLed() == 0)
+	  }else if (get_OrangeLed() == 0)
 	  {
 		  printf("\r\nOrangeLed OFF, with button, number SWT3!\r\n");
 	  }
