@@ -32,6 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define sensorChannel 0 // 0 - potentiometer, 9 - ext.TempSensor, 16 - internal TempSensor
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -93,8 +94,7 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-  static const uint8_t sensorChannel = 0; // 0 - potentiometer, 9 - ext.TempSensor
-  uint32_t adcValue = 0;				  // 16 - internal TempSensor
+  uint32_t adcValue = 0;
   volatile HAL_StatusTypeDef adcPoolResult;
 
   HAL_ADC_Start(&hadc1);
@@ -109,8 +109,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  if(sensorChannel == 0)
-  {
+#if sensorChannel == 0
   while (1)
   {
 	  	  	  	  adcPoolResult = HAL_ADC_PollForConversion(&hadc1, 1);
@@ -161,8 +160,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
   }
-  } else if (sensorChannel == 9)
-  {
+#elif sensorChannel == 9
 	  while (1)
 	  	   		  	{
 	  	   		  		adcPoolResult = HAL_ADC_PollForConversion(&hadc1, 1);
@@ -197,9 +195,7 @@ int main(void)
 	  	   		  			  	TIM4->CCR3 += 25;
 	  	   		  			   }
 	    }
-  }
-  else if (sensorChannel == 16)
-  {
+#elif sensorChannel == 16
 	  while (1)
 	   		  	{
 	   		  		adcPoolResult = HAL_ADC_PollForConversion(&hadc1, 1);
@@ -234,7 +230,7 @@ int main(void)
 	   		  			  	TIM4->CCR3 += 25;
 	   		  			   }
   }
-  }
+#endif
   /* USER CODE END 3 */
 }
 

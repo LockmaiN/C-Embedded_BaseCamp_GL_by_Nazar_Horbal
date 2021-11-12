@@ -40,6 +40,15 @@
 #else
   #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif /* __GNUC__ */
+
+#define msg0 "Blue LED ON!"
+#define msg1 "Blue LED OFF!"
+#define msg2 "Red LED ON!"
+#define msg3 "Red LED OFF!"
+#define msg4 "Green LED ON!"
+#define msg5 "Green LED OFF!"
+#define msg6 "Orange LED ON!"
+#define msg7 "Orange LED OFF!"
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -112,86 +121,59 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(get_BlueLed() == 1)
-	  {
-	      printf("\r\nBlueLed ON, with button, number SWT4!\r\n");
-	  }else if (get_BlueLed() == 0)
-	  {
-	      printf("\r\nBlueLed OFF, with button, number SWT4!\r\n");
-	  }
 
-	  if(get_RedLed() == 1)
-	  {
-		  printf("\r\nRedLed ON, with button, number SWT5!\r\n");
-	  } else if (get_RedLed() == 0)
-	  {
-		  printf("\r\nRedLed OFF, with button, number SWT5!\r\n");
-	  }
+	  printf(get_BlueLed() == 1 ? "\r\nBlueLed ON, with button, number SWT4!\r\n" : "\r\nBlueLed OFF, with button, number SWT4!\r\n");
+	  printf(get_RedLed() == 1 ? "\r\nRedLed ON, with button, number SWT5!\r\n" : "\r\nRedLed OFF, with button, number SWT5!\r\n");
+	  printf(get_OrangeLed() == 1 ? "\r\nOrangeLed ON, with button, number SWT3!\r\n" : "\r\nOrangeLed OFF, with button, number SWT3!\r\n");
+	  printf(get_GreenLed() == 1 ? "\r\nGreenLed ON, with button, number SWT1!\r\n" : "\r\nGreenLed OFF, with button, number SWT1!\r\n");
 
-	  if(get_OrangeLed() == 1)
-	  {
-		  printf("\r\nOrangeLed ON, with button, number SWT3!\r\n");
-	  }else if (get_OrangeLed() == 0)
-	  {
-		  printf("\r\nOrangeLed OFF, with button, number SWT3!\r\n");
-	  }
-
-	  if(get_GreenLed() == 1)
-	  {
-		  printf("\r\nGreenLed ON, with button, number SWT1!\r\n");
-	  }
-	  else if (get_GreenLed() == 0)
-	  {
-		  printf("\r\nGreenLed OFF, with button, number SWT1!\r\n");
-	  }
-
-	  uint8_t rcvBuf[1];
+	  uint8_t rcvBuf;
 	  HAL_StatusTypeDef result;
 
-	  result = HAL_UART_Receive(&huart3, rcvBuf, 1, 10);
+	  result = HAL_UART_Receive(&huart3, &rcvBuf, sizeof(rcvBuf), 10);
 
 	  if (result == HAL_OK)
 	  {
-		  switch (rcvBuf[0])
+		  switch (rcvBuf)
 		  {
 		  	  case '1':
 		  		  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET);
-		  		  HAL_UART_Transmit(&huart3, (uint8_t *)"Blue LED ON!", 12, 10);
+		  		  HAL_UART_Transmit(&huart3, (uint8_t *)msg0, strlen(msg0), 10);
 		  		  break;
 
 		  	  case '0':
 		  		  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_RESET);
-		  		  HAL_UART_Transmit(&huart3, (uint8_t *)"Blue LED OFF!", 13, 10);
+		  		  HAL_UART_Transmit(&huart3, (uint8_t *)msg1, strlen(msg1), 10);
 		  		  break;
 
 		  	  case '3':
 		  		  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET);
-		  		  HAL_UART_Transmit(&huart3, (uint8_t *)"Red LED ON!", 11, 10);
+		  		  HAL_UART_Transmit(&huart3, (uint8_t *)msg2, strlen(msg2), 10);
 		  		  break;
 
 		  	  case '2':
 		  		  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_RESET);
-		  		  HAL_UART_Transmit(&huart3, (uint8_t *)"Red LED OFF!", 12, 10);
+		  		  HAL_UART_Transmit(&huart3, (uint8_t *)msg3, strlen(msg3), 10);
 		  		  break;
 
 		  	  case '5':
 		  		  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);
-		  		  HAL_UART_Transmit(&huart3, (uint8_t *)"Green LED ON!", 13, 10);
+		  		  HAL_UART_Transmit(&huart3, (uint8_t *)msg4, strlen(msg4), 10);
 		  		  break;
 
 		  	  case '4':
 		  		  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);
-		  		  HAL_UART_Transmit(&huart3, (uint8_t *)"Green LED OFF!", 14, 10);
+		  		  HAL_UART_Transmit(&huart3, (uint8_t *)msg5, strlen(msg5), 10);
 		  		  break;
 
 		  	  case '7':
 		  		  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
-		  		  HAL_UART_Transmit(&huart3, (uint8_t *)"Orange LED ON!", 14, 10);
+		  		  HAL_UART_Transmit(&huart3, (uint8_t *)msg6, strlen(msg6), 10);
 		  		  break;
 
 		  	  case '6':
 		  		  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
-		  		  HAL_UART_Transmit(&huart3, (uint8_t *)"Orange LED OFF!", 15, 10);
+		  		  HAL_UART_Transmit(&huart3, (uint8_t *)msg7, strlen(msg7), 10);
 		  		  break;
 
 		  	  default:
@@ -203,6 +185,7 @@ int main(void)
 	  adcPoolResult = HAL_ADC_PollForConversion(&hadc1, 1);
 
 	  if (adcPoolResult == HAL_OK) // Ext. TempSensor
+	  {
 	  	  adcValue = HAL_ADC_GetValue(&hadc1); // -24C = 2.5 V; 100C  = 0.02V;
 
 	  if(adcValue >= 2000)
@@ -213,6 +196,7 @@ int main(void)
 	  {
 		  printf("\r\nTemperature from ext. TempSensor: ~%lu C\r\n", (adcValue / 100) + 5);
 		  HAL_Delay(5000);
+	  }
 	  }
 
     /* USER CODE END WHILE */
