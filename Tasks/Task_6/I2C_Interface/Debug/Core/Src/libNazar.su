@@ -1,0 +1,8 @@
+libNazar.c:23:6:enableOutTim4	8	static
+libNazar.c:31:6:disableOutTim4	8	static
+libNazar.c:39:6:setDutyCycle	16	static
+libNazar.c:47:6:setPwmFrequency	16	static
+libNazar.c:52:6:enableSleepMode	8	static
+libNazar.c:59:6:disableSleepMode	8	static
+libNazar.c:70:13:MX_TIM4_Init	64	static
+libNazar.c:141:13:MX_GPIO_Init	48	static
